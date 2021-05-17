@@ -37,7 +37,7 @@ export function scan(prog: string[], i: number): [Token,number] {
     else if(isNumber(c)){
         tkType = TokenType.NUM;
         let next: string = prog[i+1];
-        while(isNumber(next)){
+        while(isNumber(next) || next == '.'){
             c = `${c}` + `${next}`;
             i++;
             next = prog[i+1];

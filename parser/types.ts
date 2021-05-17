@@ -10,7 +10,7 @@ export enum TokenType {
     ERROR = "ERROR"
 }
 
-export type SExp = Token | SExpNode | BadExpr;
+export type SExp = SExpNode | Token | BadExpr;
 
 export class Token{
     tokenType: TokenType;
@@ -25,9 +25,9 @@ export class Token{
 }
 
 export class SExpNode{
-    first: SExp;
-    rest: SExp | null;
-    constructor(first: SExp, rest: SExp | null){
+    first: SExp; 
+    rest:  SExp | null;
+    constructor(first: SExp, rest: SExp | null | SExpNode){
         this.first = first; 
         this.rest = rest;
     }

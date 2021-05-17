@@ -1,0 +1,1 @@
+export const keywords: string[] = ["vars", "skip", "seq", "set", "print", "iif", "while"];
