@@ -1,7 +1,8 @@
-import { Decl, DeclListNode, Program } from "./SIMPLtypes";
+import { Decl, DeclListNode, Program, Skip, StmtAST } from "./SIMPLtypes";
 import {parseSExp} from './SExpParse/parsesexp';
 import { SExp, SExpNode, Token, TokenType } from "./types";
 import {keywords} from './keywords';
+import { findSourceMap } from "module";
 
 const doParse = (sexp: SExp): Program | string =>{
     let result: Program | string = null;
@@ -32,10 +33,59 @@ const doParse = (sexp: SExp): Program | string =>{
     }
 
 
-    let declAst: DeclListNode | string = parseDeclseq(decls); // Variable linkedlist.
+    let declAst: DeclListNode | string = parseDeclseq(decls); 
     
+    if(typeof declAst == 'string'){
+        return declAst;
+    }
 
+    let stmt: StmtAST | string = parseSeq((lst.rest instanceof SExpNode)?(lst.rest.rest):null);
+    console.log(stmt);
     return null;
+}
+
+const parseSeq = (lst: SExp): StmtAST | string => {
+
+    if(lst == null){
+        return "Program cannot be empty";
+    }
+    const n = len(lst); 
+    if(n==1){
+        return parseStmt((lst instanceof SExpNode)?lst.first:null);
+    }
+}
+
+const parseStmt = (sexp:SExp): StmtAST | string =>{
+    if(sexp instanceof Token){
+        return "Bad expression";
+    }
+    let lst: SExpNode;
+    if(sexp instanceof SExpNode){
+        lst = sexp;
+    }
+    let n = len(lst);
+    if(!n){
+        return "Empty Statement";
+    }
+
+    let first: SExp = lst.first;
+    if(!(first instanceof Token)){
+        return "Statement Cannot be a list";
+    }
+
+    let t: Token = first;
+    if(t.type != TokenType.ID){
+        return "Statement must begin with a key word. "
+    }
+
+    if(t.lexme === "skip"){
+        if(n!=1){
+            return "Skip takes no args";
+        }
+        return new Skip(); 
+    }
+
+
 }
 
 const parseDeclseq = (lst: SExpNode | SExp): DeclListNode | string =>{
@@ -101,3 +151,5 @@ export const ParseProgram = (prog: string):Program | string =>{
     let p: Program | string = doParse(sexp);
     return p;
 }
+
+console.log(ParseProgram("(vars [(i 100) (j 200)] (skip))"))
