@@ -42,7 +42,7 @@ const doParse = (sexp: SExp): Program | string =>{
     if(typeof stmt == 'string'){
         return stmt;
     }
-    return new Program(true, decls, stmt);
+    return new Program(true, declAst, stmt);
 }
 
 const parseSeq = (lst: SExp): StmtAST | string => {
