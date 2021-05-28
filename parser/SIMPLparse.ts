@@ -1,7 +1,7 @@
 import { AEAST, AEBin, AEId, AENum, Decl, DeclListNode, Program, Seq, Skip, StmtAST, Set, Print, BELit, BEAnd, BEAST, BENot, BEOr, BECompare, Iif, While } from "./SIMPLtypes";
 import {parseSExp} from './SExpParse/parsesexp';
 import { BadExpr, SExp, SExpNode, Token, TokenType } from "./types";
-import {compOP, keywords, OP} from './keywords';
+import {compOP, keywords, OP, OPmap} from './keywords';
 
 const doParse = (sexp: SExp): Program | string =>{
     let result: Program | string = null;
@@ -322,13 +322,10 @@ const parseAE = (sexp: SExp):AEAST | string => {
         }
         let operator = first;
         if(!isOp(operator.lexme)){
-            return "Operator must be +, - , div, *, or mod";
+            return `Operator must be one of ${OP}`;
         }
 
-        op = operator.lexme;
-        if(op == "div"){ op = "/"}
-        if(op == "mod"){op = "%"}
-        
+        op = OPmap[operator.lexme]; 
         let arg1 = parseAE(second);
         if(typeof arg1 == 'string'){
             return arg1;

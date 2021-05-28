@@ -6,7 +6,8 @@ const BinOP = {
     '-': (a, b) => a - b,
     '*': (a, b) => a * b,
     '/': (a, b) => a / b,
-    '%': (a, b) => a % b
+    '%': (a, b) => a % b, 
+    'divi': (a,b) => Math.floor(a/b)
 };
 
 const BEComp = {
@@ -179,6 +180,8 @@ const interp = (inp: string): Promise<(string | number)[]> => {
     });
 }
 
-let p = interp('(vars [(i 100) (j 200) (k 300)] (while (> i 0) (print i) (set i (- i 1))) (print i))')        
+export default {interp, interpSimpl, ParseProgram};
+// test
+let p = interp('(vars [(i 100) (j 200) (k 300)] (while (> i 0) (print i) (set i (divi i 2))) (print i))')        
     .then(v => console.log(v))
     .catch(c => console.log(c));
