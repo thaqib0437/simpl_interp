@@ -4,6 +4,7 @@
   "description": "__",
   "main": "main.ts",
   "scripts": {
+      "build": "tsc main.ts",
       "ts-run": "ts-node main.ts", 
       "ts-debug": "ts-node test.ts"
   },
