@@ -5,7 +5,7 @@
   "main": "main.ts",
   "scripts": {
       "ts-run": "ts-node main.ts", 
-      "ts-debug": "ts-node ./parser/SExpParse/SExpParse.ts"
+      "ts-debug": "ts-node test.ts"
   },
   "author": "",
   "license": "ISC",
