@@ -2,13 +2,13 @@
   "name": "simpl_interp",
   "version": "1.0.0",
   "description": "__",
-  "main": "main.ts",
+  "main": "./dist/main.js",
   "scripts": {
-      "build": "tsc main.ts",
+      "build": "tsc",
       "ts-run": "ts-node main.ts", 
       "ts-debug": "ts-node test.ts"
   },
-  "author": "",
+  "author": "thaqib",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^15.0.2",
