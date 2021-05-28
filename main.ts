@@ -1,3 +1,4 @@
+import { ParseOptions } from 'querystring';
 import ParseProgram from './parser/SIMPLparse';
 import { AEAST, AEBin, AEId, AENum, BEAnd, BEAST, BECompare, BELit, BENot, BEOr, DeclListNode, Iif, Print, Program, Seq, Set, Skip, StmtAST, While } from './parser/SIMPLtypes';
 
@@ -112,7 +113,7 @@ const setVar = (val: string, expr: AEAST, mp: Map<string, number>):Promise<Map<s
     })
 }
 
-const interpSimpl = (AST: StmtAST, env: Map<string, number>, out: (string | number)[]): Promise<[(string | number)[], Map<string, number>]> => {
+export const interpSimpl = (AST: StmtAST, env: Map<string, number>, out: (string | number)[]): Promise<[(string | number)[], Map<string, number>]> => {
     return new Promise((resolve, reject) => {
         if (AST instanceof Skip) {
             resolve([out, env]);
@@ -164,7 +165,7 @@ const interpSimpl = (AST: StmtAST, env: Map<string, number>, out: (string | numb
     });
 }
 
-const interp = (inp: string): Promise<(string | number)[]> => {
+export const interp = (inp: string): Promise<(string | number)[]> => {
     return new Promise((resolve, reject) => {
         const prog: Program | string = ParseProgram(inp);
         if (typeof prog == 'string') {
@@ -180,8 +181,6 @@ const interp = (inp: string): Promise<(string | number)[]> => {
     });
 }
 
-export default {interp, interpSimpl, ParseProgram};
-// test
-let p = interp('(vars [(i 100) (j 200) (k 300)] (while (> i 0) (print i) (set i (divi i 2))) (print i))')        
-    .then(v => console.log(v))
-    .catch(c => console.log(c));
+export const getAST = (inp: string): Program | string =>{
+    return ParseProgram(inp);
+}
