@@ -5,7 +5,7 @@ const isNumber = (c: string):boolean => (c >= '0' && c<='9');
 export function scan(prog: string[], i: number): [Token,number] {
     let c: string = prog[i];
     let tkType: TokenType = TokenType.ERROR;
-    while(c===' '){
+    while(c===' ' || c==='\t' || c==='\n'){
         i++; 
         c = prog[i];
     }
